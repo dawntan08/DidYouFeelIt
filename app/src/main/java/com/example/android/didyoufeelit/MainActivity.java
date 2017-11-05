@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, Event>{
         // perform the http request in the background
         protected Event doInBackground(String... urls){
+            //check if no URL is null or no URL was provided
+            if(urls.length < 1 || urls[0] == null){
+                return null;
+            }
             // Perform the HTTP request for earthquake data and process the response.
             Event result = Utils.fetchEarthquakeData(urls[0]);
             return result;
@@ -63,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         // update the ui with the data taken from the site
         protected void onPostExecute(Event result){
+            //check if result is null before updating UI
+            if(result == null){
+                return;
+            }
             // Update the information displayed to the user.
             updateUi(result);
         }
